@@ -52,13 +52,22 @@ describe("gameBoard tester", () => {
   });
   //ship already exists
   let testShip2 = ship(2);
-  test("if already placed, throw error", () => {
+  test("if already placed, throw error, vertical", () => {
     expect(() => {
       placeShip([0, 0], testShip2);
     }).toThrow();
     expect(testBoard.tileSet).toEqual(testTileSet);
   });
-  test("if already placed, no changes to tileset", () => {
+  test("if already placed, no changes to tileset, vertical", () => {
+    expect(testBoard.tileSet).toEqual(testTileSet);
+  });
+  test("if already placed, throw error, horizontal", () => {
+    expect(() => {
+      placeShip([0, 0], testShip2, "hor");
+    }).toThrow();
+    expect(testBoard.tileSet).toEqual(testTileSet);
+  });
+  test("if already placed, no changes to tileset, horizontal", () => {
     expect(testBoard.tileSet).toEqual(testTileSet);
   });
   //recieve attack

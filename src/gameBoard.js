@@ -1,3 +1,7 @@
+/* shouuld mostly contain all the logic for teh gameBoard
+
+*/
+
 export default gameBoard = (gridSize) => {
   //each tile will be an object that has a hit state property and-
   //a propertly to hold the ship
@@ -97,7 +101,7 @@ export default gameBoard = (gridSize) => {
           i++
         ) {
           if (tileSet[x][i].shipContained !== null)
-            throw new Error("Ship already exists");
+            throw new Error(`Ship already exists, ${[x, i]}`);
         }
       } else {
         for (
@@ -106,8 +110,8 @@ export default gameBoard = (gridSize) => {
           i < x + ship.length;
           i++
         ) {
-          if (tileSet[x][i].shipContained !== null)
-            throw new Error("Ship already exists");
+          if (tileSet[i][y].shipContained !== null)
+            throw new Error(`Ship already exists, ${[x, i]}`);
         }
       }
     }
