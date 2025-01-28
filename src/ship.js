@@ -1,11 +1,11 @@
 let ship = (length) => {
   let hitsTaken = 0;
-  let state = true;
   function hit() {
     hitsTaken++;
   }
   function isSunk() {
-    if (hitsTaken >= length) state = false;
+    if (hitsTaken >= length) return true;
+    return false;
   }
   return {
     get length() {
@@ -13,9 +13,6 @@ let ship = (length) => {
     },
     get hitsTaken() {
       return hitsTaken;
-    },
-    get state() {
-      return state;
     },
     hit,
     isSunk,

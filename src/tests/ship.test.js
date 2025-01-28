@@ -8,22 +8,18 @@ describe("ship tester", () => {
   test("number of hits", () => {
     expect(testShip.hitsTaken).toBe(0);
   });
-  test("state", () => {
-    expect(testShip.state).toBe(true);
-  });
   test("hit function", () => {
     let hits = testShip.hitsTaken;
     testShip.hit();
     expect(testShip.hitsTaken).toBe(hits + 1);
   });
   test("isSunk true test", () => {
-    testShip.isSunk();
-    expect(testShip.state).toBe(true);
+    expect(testShip.isSunk()).toBe(false);
   });
   test("isSunk false test", () => {
     testShip.hit();
     testShip.hit();
-    testShip.isSunk(); //initially true now changes to status to false
-    expect(testShip.state).toBe(false);
+    //initially true now changes to status to false
+    expect(testShip.isSunk()).toBe(true);
   });
 });
