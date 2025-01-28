@@ -1,4 +1,4 @@
-export default gameBoard = () => {
+export default gameBoard = (gridSize) => {
   //each tile will be an object that has a hit state property and-
   //a propertly to hold the ship
   let tileSet = [];
@@ -11,7 +11,7 @@ export default gameBoard = () => {
         tileSet[i].push({ isHit: null, shipContained: null });
       }
     }
-  })(10);
+  })(gridSize);
   function AreAllShipsSunk() {
     let shipsNotSunk = [];
     shipsNotSunk = shipList.filter((ship) => {
@@ -20,7 +20,6 @@ export default gameBoard = () => {
       }
       return true;
     });
-    console.log(shipsNotSunk);
     if (shipsNotSunk.length === 0) {
       return true;
     }

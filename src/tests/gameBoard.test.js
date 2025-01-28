@@ -2,8 +2,22 @@ import gameBoard from "../gameBoard";
 import ship from "../ship";
 
 describe("gameBoard tester", () => {
-  let [...testTileSet] = gameBoard().tileSet;
-  let testBoard = gameBoard();
+  test("tile set generation", () => {
+    let testTileSet = [
+      [
+        { isHit: null, shipContained: null },
+        { isHit: null, shipContained: null },
+      ],
+      [
+        { isHit: null, shipContained: null },
+        { isHit: null, shipContained: null },
+      ],
+    ];
+    expect(gameBoard(2).tileSet).toEqual(testTileSet);
+  });
+
+  let [...testTileSet] = gameBoard(10).tileSet;
+  let testBoard = gameBoard(10);
   let testShip = ship(3);
 
   test("vertical placement of ship", () => {
@@ -71,7 +85,7 @@ describe("gameBoard tester", () => {
       testBoard.recieveAttack([0, 0]);
     }).toThrow();
   });
-  let testBoard2 = gameBoard();
+  let testBoard2 = gameBoard(10);
   testBoard2.placeShip([0, 0], ship(1));
   testBoard2.placeShip([1, 0], ship(2), "hor");
   testBoard2.recieveAttack([0, 0]);

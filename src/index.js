@@ -2,7 +2,7 @@ import "./reset.css";
 import "./styles.css";
 import gameBoard from "./gameBoard";
 import ship from "./ship";
-
+import DOMHandler from "./DOMHandler";
 let player, computer;
 newGame();
 function newGame() {
