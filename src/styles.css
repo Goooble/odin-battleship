@@ -13,3 +13,23 @@
     "Helvetica Neue",
     sans-serif;
 }
+
+h1 {
+  text-align: center;
+}
+body {
+  height: 100vh;
+}
+.board-cont {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+.player-side,
+.computer-side {
+  height: 100%;
+  width: 100%;
+  background-color: cadetblue;
+  border: 2px solid black;
+}

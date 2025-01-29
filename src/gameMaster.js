@@ -1,16 +1,15 @@
-import gameBoard from "./gameBoard";
-import ship from "./ship";
-
 /*Will contain all the game logic */
 export default gameMaster = () => {
-  function newGame() {
-    let player = gameBoard(10);
-    let computer = gameBoard(10);
-    player.placeShip([0, 0], ship(3));
-    player.placeShip([0, 3], ship(2), "hor");
-    computer.placeShip([5, 5], ship(3));
-    computer.placeShip([6, 5], ship(2), "hor");
-    return [player, computer];
+  function createPlayers(gameBoard) {
+    return [gameBoard(), gameBoard()];
   }
-  return { newGame };
+  function placeShipsOnBoard(player, ship, coordinatesArray) {
+    //as many ships with the given sizes below are places depending on how long the coordinates array is
+    //makes it easier to test the game
+    let length = [5, 4, 3, 3, 2];
+    for (let i = 0; i < coordinatesArray.length; i++) {
+      player.placeShip(coordinatesArray[i], ship(length[i]));
+    }
+  }
+  return { createPlayers, placeShipsOnBoard };
 };
