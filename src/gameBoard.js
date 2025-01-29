@@ -2,7 +2,7 @@
 
 */
 
-export default gameBoard = (gridSize) => {
+const gameBoard = (gridSize = 10) => {
   //each tile will be an object that has a hit state property and-
   //a propertly to hold the ship
   let tileSet = [];
@@ -49,17 +49,20 @@ export default gameBoard = (gridSize) => {
     //check for out of bounds
     //placement happens bottom up and left to right
     //so can only clip on teh right and top edge
-    if (y + ship.length > 10) {
-      //moves the y coordinate a few tiles down
-      //so the ship can be placed within the grid
-      //while using the below logic for placement
-      y = 10 - ship.length;
-    }
-    if (x + ship.length > 10) {
-      //moves the y coordinate a few tiles down
-      //so the ship can be placed within the grid
-      //while using the below logic for placement
-      x = 10 - ship.length;
+    if (orientation === "ver") {
+      if (y + ship.length > 10) {
+        //moves the y coordinate a few tiles down
+        //so the ship can be placed within the grid
+        //while using the below logic for placement
+        y = 10 - ship.length;
+      }
+    } else {
+      if (x + ship.length > 10) {
+        //moves the y coordinate a few tiles down
+        //so the ship can be placed within the grid
+        //while using the below logic for placement
+        x = 10 - ship.length;
+      }
     }
 
     //if orientation is not mentioned its vertical, if anything is passed, its horizontal
@@ -125,3 +128,4 @@ export default gameBoard = (gridSize) => {
     AreAllShipsSunk,
   };
 };
+export { gameBoard };

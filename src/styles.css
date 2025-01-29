@@ -19,6 +19,9 @@ h1 {
 }
 body {
   height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
 }
 .board-cont {
   display: flex;
@@ -26,10 +29,46 @@ body {
   width: 100%;
 }
 
-.player-side,
+.human-side,
 .computer-side {
   height: 100%;
   width: 100%;
   background-color: cadetblue;
   border: 2px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.human-board,
+.computer-board {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column-reverse;
+  box-sizing: content-box;
+  height: 600px;
+  width: 600px;
+  background-color: white;
+  border: 5px solid blanchedalmond;
+}
+
+.tile {
+  width: 60px;
+  height: 60px;
+  background-color: aquamarine;
+  border: 1px solid white;
+}
+
+.tile.shipTile {
+  background-color: grey;
+}
+.tile.missTile {
+  background-color: rgb(24, 46, 39);
+}
+.tile.hitTile {
+  background-color: black;
+}
+.tile.sunkTile {
+  background-color: red;
 }
