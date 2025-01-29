@@ -1,4 +1,4 @@
-import ship from "../ship.js";
+import { ship } from "../ship.js";
 
 describe("ship tester", () => {
   let testShip = ship(3);

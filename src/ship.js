@@ -21,4 +21,4 @@ let ship = (length) => {
   //making state redundant?
 };
 
-export default ship;
+export { ship };

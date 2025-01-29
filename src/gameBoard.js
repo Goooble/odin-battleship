@@ -16,6 +16,7 @@ const gameBoard = (gridSize = 10) => {
       }
     }
   })(gridSize);
+
   function AreAllShipsSunk() {
     let shipsNotSunk = [];
     shipsNotSunk = shipList.filter((ship) => {
@@ -41,6 +42,14 @@ const gameBoard = (gridSize = 10) => {
       tile.shipContained.hit();
     } else {
       tile.isHit = false;
+    }
+  }
+  function placeShipsOnBoard(ship, coordinatesArray) {
+    //as many ships with the given sizes below are places depending on how long the coordinates array is
+    //makes it easier to test the game
+    let length = [5, 4, 3, 3, 2];
+    for (let i = 0; i < coordinatesArray.length; i++) {
+      placeShip(coordinatesArray[i], ship(length[i]));
     }
   }
   function placeShip(coordinates, ship, orientation = "ver") {
@@ -126,6 +135,7 @@ const gameBoard = (gridSize = 10) => {
       return tileSet;
     },
     AreAllShipsSunk,
+    placeShipsOnBoard,
   };
 };
 export { gameBoard };
