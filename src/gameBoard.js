@@ -44,6 +44,8 @@ const gameBoard = (gridSize = 10) => {
       tile.isHit = false;
     }
   }
+
+  //this is a temporary function for testing
   function placeShipsOnBoard(ship, coordinatesArray) {
     //as many ships with the given sizes below are places depending on how long the coordinates array is
     //makes it easier to test the game
