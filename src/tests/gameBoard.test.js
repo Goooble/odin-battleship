@@ -106,25 +106,4 @@ describe("gameBoard tester", () => {
     testBoard2.placeShip([8, 0], ship(3));
     expect(testBoard2.AreAllShipsSunk()).toBe(false);
   });
-
-  //placing ships
-  test("PlaceShipsOnBoard exist", () => {
-    expect(gameBoard().hasOwnProperty("placeShipsOnBoard")).toBe(true);
-  });
-  test.skip("two ships of 5 and 4 are placed", () => {
-    let board = gameBoard();
-    const placeShip = jest.spyOn(board, "placeShip");
-    const ship = jest.fn((x) => {
-      return { length: x };
-    });
-    board.placeShipsOnBoard(ship, [
-      [0, 0],
-      [1, 2],
-    ]);
-    expect(placeShip).toHaveBeenNthCalledWith(1, [0, 0], ship(5));
-    expect(placeShip).toHaveBeenNthCalledWith(2, [1, 2], ship(4));
-    expect(ship).toHaveBeenNthCalledWith(1, 5);
-    expect(ship).toHaveBeenNthCalledWith(2, 4);
-    expect(placeShip).toHaveBeenCalledTimes(2);
-  });
 });

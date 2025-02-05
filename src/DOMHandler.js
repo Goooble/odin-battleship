@@ -5,7 +5,8 @@ as little to no logic as possible to keep DOM seperate from the rest
 renderBoard
     needs the tileset
 */
-const DOMHandler = () => {
+
+const DOMHandler = (() => {
   function renderBoard(tileSet, boardCont, visibility) {
     clearBoard();
     for (let i = 0; i < 10; i++) {
@@ -46,6 +47,6 @@ const DOMHandler = () => {
     return [tile.dataset.x, tile.dataset.y];
   }
   return { renderBoard, getCoordinates };
-};
+})();
 
 export { DOMHandler };
