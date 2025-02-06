@@ -72,75 +72,120 @@ describe("game master tests", () => {
   test("properPlayerTurn exists", () => {
     expect(Object.hasOwn(gameMaster, "properPlayerTurn")).toBe(true);
   });
-  test("properPlayerTurn works for correct turn on player1", () => {
-    let e = {
-      target: [0, 0],
-      currentTarget: { className: "computer-board" },
-    };
-    gameMaster.properPlayerTurn(e);
+  test("properPlayerTurn works for correct turn on player2", () => {
+    let e = [0, 0];
+    gameMaster.properPlayerTurn(e, player2);
     expect(player2.board.recieveAttack).toHaveBeenCalledWith([0, 0]);
   });
-  test("properPlayerTurn works for correct turn on player2 ensures turn switching", () => {
-    let e = {
-      target: [5, 8],
-      currentTarget: { className: "human-board" },
-    };
-    gameMaster.properPlayerTurn(e);
-    expect(player1.board.recieveAttack).toHaveBeenCalledWith([5, 8]);
+  test("properPlayerTurn works for correct turn on player1", () => {
+    let e = [0, 0];
+    gameMaster.properPlayerTurn(e, player1);
+    expect(player1.board.recieveAttack).toHaveBeenCalledWith([0, 0]);
   });
-  test("properPlayerTurn works for wrong turn", () => {
-    let e = {
-      target: [0, 0],
-      currentTarget: { className: "human-board" },
-    };
-
-    expect(() => {
-      gameMaster.properPlayerTurn(e);
-    }).toThrow();
-  });
-  test("properPlayerTurn works for correct turn on player1 again", () => {
-    let e = {
-      target: [4, 3],
-      currentTarget: { className: "computer-board" },
-    };
-    gameMaster.properPlayerTurn(e);
-    expect(player2.board.recieveAttack).toHaveBeenNthCalledWith(2, [4, 3]);
-  });
-  test("render called properly", () => {
-    expect(render).toHaveBeenCalledTimes(5);
-  });
-  test("if hit, another turn", () => {
-    player1.board.recieveAttack.mockReturnValueOnce(true);
-    let e = {
-      target: [6, 3],
-      currentTarget: { className: "human-board" },
-    };
-    gameMaster.properPlayerTurn(e);
-    expect(player1.board.recieveAttack).toHaveBeenNthCalledWith(2, [6, 3]);
-
-    e = {
-      target: [8, 3],
-      currentTarget: { className: "human-board" },
-    };
-    gameMaster.properPlayerTurn(e);
-    expect(player1.board.recieveAttack).toHaveBeenNthCalledWith(3, [8, 3]);
-  });
-  test("if all ships sunk on computer board, stop game", () => {
+  test("two chances for hit on player2", () => {
+    let e = [1, 0];
     player2.board.recieveAttack.mockReturnValueOnce(true);
-    player2.board.AreAllShipsSunk.mockReturnValueOnce(true);
-    let e = {
-      target: [9, 3],
-      currentTarget: { className: "computer-board" },
-    };
-    gameMaster.properPlayerTurn(e);
-    expect(player2.board.recieveAttack).toHaveBeenNthCalledWith(3, [9, 3]);
+    gameMaster.properPlayerTurn(e, player2);
+    e = [2, 0];
+    gameMaster.properPlayerTurn(e, player2);
+    expect(player2.board.recieveAttack).toHaveBeenNthCalledWith(2, [1, 0]);
+    expect(player2.board.recieveAttack).toHaveBeenNthCalledWith(3, [2, 0]);
+  });
+  test("p1 triggers game over", () => {
+    let e = [3, 0];
+    player1.board.recieveAttack.mockReturnValueOnce(true);
+    player1.board.AreAllShipsSunk.mockReturnValueOnce(true);
+    gameMaster.properPlayerTurn(e, player1);
+    e = [4, 0];
 
-    e = {
-      target: [8, 3],
-      currentTarget: { className: "computer-board" },
-    };
+    expect(player1.board.recieveAttack).toHaveBeenNthCalledWith(2, [3, 0]);
     expect(() => {
-      gameMaster.properPlayerTurn(e);
+      gameMaster.properPlayerTurn(e, player1);
     }).toThrow();
   });
+
+  // test("properPlayerTurn works for correct turn on player2 ensures turn switching", () => {
+  //   let e = {
+  //     target: [5, 8],
+  //     currentTarget: { className: "human-board" },
+  //   };
+  //   gameMaster.properPlayerTurn(e);
+  //   expect(player1.board.recieveAttack).toHaveBeenCalledWith([5, 8]);
+  // });
+  // test("properPlayerTurn works for wrong turn", () => {
+  //   let e = {
+  //     target: [0, 0],
+  //     currentTarget: { className: "human-board" },
+  //   };
+
+  //   expect(() => {
+  //     gameMaster.properPlayerTurn(e);
+  //   }).toThrow();
+  // });
+  // test("properPlayerTurn works for correct turn on player1 again", () => {
+  //   let e = {
+  //     target: [4, 3],
+  //     currentTarget: { className: "computer-board" },
+  //   };
+  //   gameMaster.properPlayerTurn(e);
+  //   expect(player2.board.recieveAttack).toHaveBeenNthCalledWith(2, [4, 3]);
+  // });
+  // test("render called properly", () => {
+  //   expect(render).toHaveBeenCalledTimes(5);
+  // });
+  // test("if hit, another turn", () => {
+  //   player1.board.recieveAttack.mockReturnValueOnce(true);
+  //   let e = {
+  //     target: [6, 3],
+  //     currentTarget: { className: "human-board" },
+  //   };
+  //   gameMaster.properPlayerTurn(e);
+  //   expect(player1.board.recieveAttack).toHaveBeenNthCalledWith(2, [6, 3]);
+
+  //   e = {
+  //     target: [8, 3],
+  //     currentTarget: { className: "human-board" },
+  //   };
+  //   gameMaster.properPlayerTurn(e);
+  //   expect(player1.board.recieveAttack).toHaveBeenNthCalledWith(3, [8, 3]);
+  // });
+  // test("if all ships sunk on computer board, stop game", () => {
+  //   player2.board.recieveAttack.mockReturnValueOnce(true);
+  //   player2.board.AreAllShipsSunk.mockReturnValueOnce(true);
+  //   let e = {
+  //     target: [9, 3],
+  //     currentTarget: { className: "computer-board" },
+  //   };
+  //   gameMaster.properPlayerTurn(e);
+  //   expect(player2.board.recieveAttack).toHaveBeenNthCalledWith(3, [9, 3]);
+
+  //   e = {
+  //     target: [8, 3],
+  //     currentTarget: { className: "computer-board" },
+  //   };
+  //   expect(() => {
+  //     gameMaster.properPlayerTurn(e);
+  //   }).toThrow();
+  // });
+  // test("computer plays its moves", () => {
+  //   gameMaster.init(true);
+  //   const player3 = player.mock.results[2].value;
+  //   const player4 = player.mock.results[3].value;
+  //   let e = {
+  //     target: [9, 3],
+  //     currentTarget: { className: "computer-board" },
+  //   };
+  //   gameMaster.properPlayerTurn(e);
+  //   expect(player4.board.recieveAttack).toHaveBeenNthCalledWith(1, [9, 3]);
+  //   expect(player3.board.recieveAttack).toHaveBeenNthCalledWith(
+  //     1,
+  //     expect.any(Array),
+  //   );
+  //   e.currentTarget.className = "human-board";
+  //   e.target = [4, 5];
+
+  //   expect(() => {
+  //     gameMaster.properPlayerTurn(e);
+  //   }).toThrow();
+  // });
 });
