@@ -41,14 +41,20 @@ let gameMaster = (() => {
     if (!gameOver) {
       if (turn === player.name) {
         let coord = DOMHandler.getCoordinates(tile);
-        if (!player.board.recieveAttack(coord)) {
-          //no hit
+        try {
+          //to catch already hit error
+          if (!player.board.recieveAttack(coord)) {
+            //no hit
 
-          setTurn();
-        } else {
-          if (player.board.AreAllShipsSunk()) {
-            gameOver = true;
+            setTurn();
+          } else {
+            if (player.board.AreAllShipsSunk()) {
+              gameOver = true;
+            }
           }
+        } catch (e) {
+          console.log(e);
+          playComp; //for the computer to play again if it hits its own square
         }
         DOMHandler.renderBoard(player1.board.tileSet, p1Cont, true);
         DOMHandler.renderBoard(player2.board.tileSet, p2Cont, false);
@@ -58,66 +64,19 @@ let gameMaster = (() => {
     } else {
       throw new Error("Game's over you dumbass");
     }
-    // if (!gameOver) {
-    //   //if the game is over or not
-    //   if (e.currentTarget.className === "human-board") {
-    //     //this is the computers move
-    //     //check who is playing the move
-    //     if (!playerTurn) {
-    //       //check if its the right players move
-    //       let coord;
-    //       if (isComp) {
-    //         coord = generateCompMoves();
-    //       } else {
-    //         coord = DOMHandler.getCoordinates(e.target);
-    //       }
-    //       if (!player1.board.recieveAttack(coord)) {
-    //         //check if it was not a hit to switch player turn
-    //         playerTurn = !playerTurn;
-    //       } else {
-    //         if (player1.board.AreAllShipsSunk()) {
-    //           //if game over after a hit
-    //           gameOver = true;
-    //         }
-    //         if (isComp) {
-    //           properPlayerTurn({
-    //             currentTarget: { className: "human-board" },
-    //           });
-    //         }
-    //       }
-    //       DOMHandler.renderBoard(player1.board.tileSet, p1Cont, true);
-    //     } else {
-    //       throw Error("not your turn");
-    //     }
-    //   } else {
-    //     if (playerTurn) {
-    //       let coord = DOMHandler.getCoordinates(e.target);
-
-    //       if (!player2.board.recieveAttack(coord)) {
-    //         playerTurn = !playerTurn;
-    //       } else {
-    //         if (player2.board.AreAllShipsSunk()) {
-    //           gameOver = true;
-    //         }
-    //       }
-    //       DOMHandler.renderBoard(player2.board.tileSet, p2Cont, false);
-    //       if (isComp) {
-    //         properPlayerTurn({
-    //           currentTarget: { className: "human-board" },
-    //         });
-    //       }
-    //     } else {
-    //       throw Error("not your turn");
-    //     }
-    //   }
-    // } else {
-    //   throw new Error("game over");
-    // }
+    playComp();
+  }
+  function playComp() {
+    if (isComp === true && turn === player1.name) {
+      let [x, y] = generateCompMoves();
+      console.log("playng conp");
+      properPlayerTurn({ dataset: { x, y } }, player1);
+    }
   }
 
   function generateCompMoves() {
     function random() {
-      return Math.floor(Math.random() * 10) + 1;
+      return Math.floor(Math.random() * 10);
     }
     return [random(), random()];
   }
