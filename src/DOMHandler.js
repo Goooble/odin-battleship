@@ -44,6 +44,7 @@ const DOMHandler = (() => {
     }
   }
   function getCoordinates(tile) {
+    console.log([tile.dataset.x, tile.dataset.y]);
     return [tile.dataset.x, tile.dataset.y];
   }
   return { renderBoard, getCoordinates };
