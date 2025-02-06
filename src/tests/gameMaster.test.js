@@ -17,11 +17,14 @@ jest.mock("../player", () => {
     __esModule: true,
     player: jest.fn(() => {
       return {
-        board: { tileSet: "tileset", recieveAttack: jest.fn() },
+        board: {
+          tileSet: "tileset",
+          recieveAttack: jest.fn(),
+          AreAllShipsSunk: jest.fn(),
+        },
         placeShipsOnBoard: jest.fn((ship, array) => {
           return { ship, array };
         }),
-        playTurn: jest.fn(),
       };
     }),
   };
@@ -80,7 +83,7 @@ describe("game master tests", () => {
   test("properPlayerTurn works for correct turn on player2 ensures turn switching", () => {
     let e = {
       target: [5, 8],
-      currentTarget: { className: "computer-board" },
+      currentTarget: { className: "human-board" },
     };
     gameMaster.properPlayerTurn(e);
     expect(player1.board.recieveAttack).toHaveBeenCalledWith([5, 8]);
@@ -105,5 +108,39 @@ describe("game master tests", () => {
   });
   test("render called properly", () => {
     expect(render).toHaveBeenCalledTimes(5);
+  });
+  test("if hit, another turn", () => {
+    player1.board.recieveAttack.mockReturnValueOnce(true);
+    let e = {
+      target: [6, 3],
+      currentTarget: { className: "human-board" },
+    };
+    gameMaster.properPlayerTurn(e);
+    expect(player1.board.recieveAttack).toHaveBeenNthCalledWith(2, [6, 3]);
+
+    e = {
+      target: [8, 3],
+      currentTarget: { className: "human-board" },
+    };
+    gameMaster.properPlayerTurn(e);
+    expect(player1.board.recieveAttack).toHaveBeenNthCalledWith(3, [8, 3]);
+  });
+  test("if all ships sunk on computer board, stop game", () => {
+    player2.board.recieveAttack.mockReturnValueOnce(true);
+    player2.board.AreAllShipsSunk.mockReturnValueOnce(true);
+    let e = {
+      target: [9, 3],
+      currentTarget: { className: "computer-board" },
+    };
+    gameMaster.properPlayerTurn(e);
+    expect(player2.board.recieveAttack).toHaveBeenNthCalledWith(3, [9, 3]);
+
+    e = {
+      target: [8, 3],
+      currentTarget: { className: "computer-board" },
+    };
+    expect(() => {
+      gameMaster.properPlayerTurn(e);
+    }).toThrow();
   });
 });

@@ -40,6 +40,7 @@ const gameBoard = (gridSize = 10) => {
     if (tile.shipContained !== null) {
       tile.isHit = true;
       tile.shipContained.hit();
+      return true;
     } else {
       tile.isHit = false;
     }

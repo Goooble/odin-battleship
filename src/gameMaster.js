@@ -9,7 +9,8 @@ const p2Cont = document.querySelector(".computer-board");
 let gameMaster = (() => {
   let player1,
     player2,
-    playerTurn = true;
+    gameOver = false;
+  let playerTurn = true;
   function init(name1 = "Gobi", name2 = "Broccoli") {
     player1 = player(name1, gameBoard());
     player2 = player(name2, gameBoard());
@@ -25,22 +26,40 @@ let gameMaster = (() => {
     DOMHandler.renderBoard(player2.board.tileSet, p2Cont, false);
   }
   function properPlayerTurn(e) {
-    if (e.currentTarget.className === "human-board") {
-      if (!playerTurn) {
-        player1.board.recieveAttack(DOMHandler.getCoordinates(e.target));
-        playerTurn = !playerTurn;
-        DOMHandler.renderBoard(player1.board.tileSet, p1Cont, true);
+    if (!gameOver) {
+      if (e.currentTarget.className === "human-board") {
+        if (!playerTurn) {
+          if (
+            !player1.board.recieveAttack(DOMHandler.getCoordinates(e.target))
+          ) {
+            playerTurn = !playerTurn;
+          } else {
+            if (player1.board.AreAllShipsSunk()) {
+              gameOver = true;
+            }
+          }
+          DOMHandler.renderBoard(player1.board.tileSet, p1Cont, true);
+        } else {
+          throw Error("not your turn");
+        }
       } else {
-        throw Error("not your turn");
+        if (playerTurn) {
+          if (
+            !player2.board.recieveAttack(DOMHandler.getCoordinates(e.target))
+          ) {
+            playerTurn = !playerTurn;
+          } else {
+            if (player2.board.AreAllShipsSunk()) {
+              gameOver = true;
+            }
+          }
+          DOMHandler.renderBoard(player2.board.tileSet, p2Cont, false);
+        } else {
+          throw Error("not your turn");
+        }
       }
     } else {
-      if (playerTurn) {
-        player2.board.recieveAttack(DOMHandler.getCoordinates(e.target));
-        playerTurn = !playerTurn;
-        DOMHandler.renderBoard(player2.board.tileSet, p2Cont, false);
-      } else {
-        throw Error("not your turn");
-      }
+      throw new Error("game over");
     }
   }
 
