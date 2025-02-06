@@ -45,6 +45,7 @@ const gameBoard = (gridSize = 10) => {
       tile.isHit = false;
     }
   }
+
   function placeShip(coordinates, ship, orientation = "ver") {
     let x = +coordinates[0];
     let y = +coordinates[1];

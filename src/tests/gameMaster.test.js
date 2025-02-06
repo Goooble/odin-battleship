@@ -15,8 +15,9 @@ import { player } from "../player";
 jest.mock("../player", () => {
   return {
     __esModule: true,
-    player: jest.fn(() => {
+    player: jest.fn((name) => {
       return {
+        name,
         board: {
           tileSet: "tileset",
           recieveAttack: jest.fn(),
@@ -57,10 +58,15 @@ describe("game master tests", () => {
     expect(player).toHaveBeenNthCalledWith(1, "Gobi", gameBoard());
     expect(player).toHaveBeenNthCalledWith(2, "Broccoli", gameBoard());
 
-    expect(player1.placeShipsOnBoard).toHaveBeenNthCalledWith(1, ship, [
-      [0, 0],
-      [5, 6],
-    ]);
+    expect(player1.placeShipsOnBoard).toHaveBeenNthCalledWith(
+      1,
+      ship,
+      [
+        [0, 0],
+        [5, 6],
+      ],
+      ["ver", "hor"],
+    );
     expect(player2.placeShipsOnBoard).toHaveBeenNthCalledWith(1, ship, [
       [0, 9],
       [3, 2],
@@ -103,89 +109,17 @@ describe("game master tests", () => {
       gameMaster.properPlayerTurn(e, player1);
     }).toThrow();
   });
+  test("computer plays its moves", () => {
+    gameMaster.init(true);
+    const player3 = player.mock.results[2].value;
+    const player4 = player.mock.results[3].value;
 
-  // test("properPlayerTurn works for correct turn on player2 ensures turn switching", () => {
-  //   let e = {
-  //     target: [5, 8],
-  //     currentTarget: { className: "human-board" },
-  //   };
-  //   gameMaster.properPlayerTurn(e);
-  //   expect(player1.board.recieveAttack).toHaveBeenCalledWith([5, 8]);
-  // });
-  // test("properPlayerTurn works for wrong turn", () => {
-  //   let e = {
-  //     target: [0, 0],
-  //     currentTarget: { className: "human-board" },
-  //   };
-
-  //   expect(() => {
-  //     gameMaster.properPlayerTurn(e);
-  //   }).toThrow();
-  // });
-  // test("properPlayerTurn works for correct turn on player1 again", () => {
-  //   let e = {
-  //     target: [4, 3],
-  //     currentTarget: { className: "computer-board" },
-  //   };
-  //   gameMaster.properPlayerTurn(e);
-  //   expect(player2.board.recieveAttack).toHaveBeenNthCalledWith(2, [4, 3]);
-  // });
-  // test("render called properly", () => {
-  //   expect(render).toHaveBeenCalledTimes(5);
-  // });
-  // test("if hit, another turn", () => {
-  //   player1.board.recieveAttack.mockReturnValueOnce(true);
-  //   let e = {
-  //     target: [6, 3],
-  //     currentTarget: { className: "human-board" },
-  //   };
-  //   gameMaster.properPlayerTurn(e);
-  //   expect(player1.board.recieveAttack).toHaveBeenNthCalledWith(2, [6, 3]);
-
-  //   e = {
-  //     target: [8, 3],
-  //     currentTarget: { className: "human-board" },
-  //   };
-  //   gameMaster.properPlayerTurn(e);
-  //   expect(player1.board.recieveAttack).toHaveBeenNthCalledWith(3, [8, 3]);
-  // });
-  // test("if all ships sunk on computer board, stop game", () => {
-  //   player2.board.recieveAttack.mockReturnValueOnce(true);
-  //   player2.board.AreAllShipsSunk.mockReturnValueOnce(true);
-  //   let e = {
-  //     target: [9, 3],
-  //     currentTarget: { className: "computer-board" },
-  //   };
-  //   gameMaster.properPlayerTurn(e);
-  //   expect(player2.board.recieveAttack).toHaveBeenNthCalledWith(3, [9, 3]);
-
-  //   e = {
-  //     target: [8, 3],
-  //     currentTarget: { className: "computer-board" },
-  //   };
-  //   expect(() => {
-  //     gameMaster.properPlayerTurn(e);
-  //   }).toThrow();
-  // });
-  // test("computer plays its moves", () => {
-  //   gameMaster.init(true);
-  //   const player3 = player.mock.results[2].value;
-  //   const player4 = player.mock.results[3].value;
-  //   let e = {
-  //     target: [9, 3],
-  //     currentTarget: { className: "computer-board" },
-  //   };
-  //   gameMaster.properPlayerTurn(e);
-  //   expect(player4.board.recieveAttack).toHaveBeenNthCalledWith(1, [9, 3]);
-  //   expect(player3.board.recieveAttack).toHaveBeenNthCalledWith(
-  //     1,
-  //     expect.any(Array),
-  //   );
-  //   e.currentTarget.className = "human-board";
-  //   e.target = [4, 5];
-
-  //   expect(() => {
-  //     gameMaster.properPlayerTurn(e);
-  //   }).toThrow();
-  // });
+    gameMaster.properPlayerTurn([0, 0], player4);
+    expect(player4.board.recieveAttack).toHaveBeenNthCalledWith(1, [0, 0]);
+    expect(player3.board.recieveAttack).toHaveBeenNthCalledWith(
+      1,
+      expect.any(Object),
+    );
+    //really not sure how to test it further, its a mess
+  });
 });

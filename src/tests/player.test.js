@@ -19,12 +19,16 @@ describe("player tests", () => {
     const ship = jest.fn((x) => {
       return { length: x };
     });
-    testPlayer.placeShipsOnBoard(ship, [
-      [0, 0],
-      [1, 2],
-    ]);
-    expect(placeShip).toHaveBeenNthCalledWith(1, [0, 0], ship(5));
-    expect(placeShip).toHaveBeenNthCalledWith(2, [1, 2], ship(4));
+    testPlayer.placeShipsOnBoard(
+      ship,
+      [
+        [0, 0],
+        [1, 2],
+      ],
+      ["ver", "hor"],
+    );
+    expect(placeShip).toHaveBeenNthCalledWith(1, [0, 0], ship(5), "ver");
+    expect(placeShip).toHaveBeenNthCalledWith(2, [1, 2], ship(4), "hor");
     expect(ship).toHaveBeenNthCalledWith(1, 5);
     expect(ship).toHaveBeenNthCalledWith(2, 4);
     expect(placeShip).toHaveBeenCalledTimes(2);

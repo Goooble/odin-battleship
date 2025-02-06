@@ -1,11 +1,49 @@
 let player = (name, board) => {
   //this is a temporary function for testing
-  function placeShipsOnBoard(ship, coordinatesArray) {
+  function placeShipsOnBoard(
+    ship,
+    coordinatesArray,
+    oriArray = [5].fill("ver"),
+  ) {
     //as many ships with the given sizes below are places depending on how long the coordinates array is
     //makes it easier to test the game
     let length = [5, 4, 3, 3, 2];
     for (let i = 0; i < coordinatesArray.length; i++) {
-      board.placeShip(coordinatesArray[i], ship(length[i]));
+      try {
+        board.placeShip(coordinatesArray[i], ship(length[i]), oriArray[i]);
+      } catch (e) {
+        throw e;
+      }
+    }
+  }
+  function placeShipsRandomly(ship) {
+    let shipCounter = 0;
+    let length = [5, 4, 3, 3, 2];
+    while (shipCounter < 5) {
+      try {
+        board.placeShip(
+          randPlacementCoord(),
+          ship(length[shipCounter]),
+          randPlacementOrient(),
+        );
+        console.log(shipCounter);
+        shipCounter++;
+      } catch (e) {
+        console.log(e);
+      } //sdji
+    }
+  }
+  function randPlacementCoord() {
+    function random() {
+      return Math.floor(Math.random() * 10);
+    }
+    return [random(), random()];
+  }
+  function randPlacementOrient() {
+    if (Math.random() > 0.5) {
+      return "ver";
+    } else {
+      return "hor";
     }
   }
   return {
@@ -16,6 +54,7 @@ let player = (name, board) => {
       return board;
     },
     placeShipsOnBoard,
+    placeShipsRandomly,
   };
 };
 
