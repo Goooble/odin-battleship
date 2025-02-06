@@ -6,6 +6,9 @@ import { ship } from "./ship";
 //could these container be passed into gameMaster?
 const p1Cont = document.querySelector(".human-board");
 const p2Cont = document.querySelector(".computer-board");
+const boardsCont = document.querySelector(".board-cont");
+const humanSide = document.querySelector(".human-side");
+const computerSide = document.querySelector(".computer-side");
 let gameMaster = (() => {
   let player1,
     player2,
@@ -20,6 +23,9 @@ let gameMaster = (() => {
     }
   }
   function init(computer = false, name1 = "Gobi", name2 = "Broccoli") {
+    if (gameOver) {
+      DOMHandler.removeGameOver(humanSide, computerSide);
+    }
     gameOver = false;
     isComp = computer; //if its a computer player
     player1 = player(name1, gameBoard());
@@ -36,8 +42,24 @@ let gameMaster = (() => {
     player2.placeShipsRandomly(ship);
     DOMHandler.renderBoard(player1.board.tileSet, p1Cont, true);
     DOMHandler.renderBoard(player2.board.tileSet, p2Cont, true);
+    // gameOverScreen(player2);
+    // gameOver = true;
   }
-  function gameOverScreen() {}
+
+  function gameOverScreen(lost) {
+    let winningSide = computerSide;
+    let losingSide = humanSide;
+    let name = player2.name;
+    if (lost === player2) {
+      winningSide = humanSide;
+      losingSide = computerSide;
+      name = player1.name;
+    }
+    DOMHandler.renderBoard(player1.board.tileSet, p1Cont, true);
+    DOMHandler.renderBoard(player2.board.tileSet, p2Cont, true);
+    DOMHandler.displayGameOver(name, winningSide, losingSide);
+  }
+
   function properPlayerTurn(tile, player) {
     if (!gameOver) {
       if (turn === player.name) {
@@ -50,7 +72,9 @@ let gameMaster = (() => {
             setTurn();
           } else {
             if (player.board.AreAllShipsSunk()) {
-              gameOver = true;
+              gameOver = true; //the circus i have to do
+
+              gameOverScreen(player);
             }
           }
         } catch (e) {

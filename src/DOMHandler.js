@@ -46,7 +46,29 @@ const DOMHandler = (() => {
     console.log([tile.dataset.x, tile.dataset.y]);
     return [tile.dataset.x, tile.dataset.y];
   }
-  return { renderBoard, getCoordinates, clearBoard };
+  function displayGameOver(name, winningSide, losingSide) {
+    const bgDiv = document.createElement("div");
+    const msgDiv = document.createElement("div");
+    msgDiv.className = "game-over";
+    bgDiv.className = "game-over";
+
+    msgDiv.textContent = `${name} won the game!`;
+    bgDiv.textContent = `you suck!`;
+
+    winningSide.appendChild(msgDiv);
+    losingSide.appendChild(bgDiv);
+  }
+  function removeGameOver(cont1, cont2) {
+    cont1.lastChild.remove();
+    cont2.lastChild.remove();
+  }
+  return {
+    renderBoard,
+    getCoordinates,
+    clearBoard,
+    displayGameOver,
+    removeGameOver,
+  };
 })();
 
 export { DOMHandler };

@@ -13,7 +13,7 @@ p2Cont.addEventListener("click", (e) => {
 });
 
 const reset = document.querySelector(".reset-but");
-console.log(reset);
+
 reset.addEventListener("click", () => {
   gameMaster.init(true);
 });

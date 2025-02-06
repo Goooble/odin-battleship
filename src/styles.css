@@ -52,7 +52,7 @@ body {
 .human-side,
 .computer-side {
   height: 100%;
-  width: 100%;
+  width: 50%;
   background-color: cadetblue;
   border: 1px solid black;
   border-top: none;
@@ -92,4 +92,15 @@ body {
 }
 .tile.sunkTile.hitTile {
   background-color: red;
+}
+.game-over {
+  background-color: rgb(0, 0, 0, 0.5);
+  color: white;
+  position: absolute;
+  width: 50%;
+  height: 80%;
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
