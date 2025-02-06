@@ -16,21 +16,20 @@ let player = (name, board) => {
       }
     }
   }
-  function placeShipsRandomly(ship) {
+  function placeShipsRandomly(
+    ship,
+    coord = randPlacementCoord,
+    orient = randPlacementOrient,
+  ) {
     let shipCounter = 0;
     let length = [5, 4, 3, 3, 2];
     while (shipCounter < 5) {
       try {
-        board.placeShip(
-          randPlacementCoord(),
-          ship(length[shipCounter]),
-          randPlacementOrient(),
-        );
-        console.log(shipCounter);
+        board.placeShip(coord(), ship(length[shipCounter]), orient());
         shipCounter++;
       } catch (e) {
         console.log(e);
-      } //sdji
+      }
     }
   }
   function randPlacementCoord() {
