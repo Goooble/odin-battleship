@@ -37,7 +37,7 @@ let gameMaster = (() => {
     DOMHandler.renderBoard(player1.board.tileSet, p1Cont, true);
     DOMHandler.renderBoard(player2.board.tileSet, p2Cont, true);
   }
-
+  function gameOverScreen() {}
   function properPlayerTurn(tile, player) {
     if (!gameOver) {
       if (turn === player.name) {

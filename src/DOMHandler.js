@@ -8,7 +8,7 @@ renderBoard
 
 const DOMHandler = (() => {
   function renderBoard(tileSet, boardCont, visibility) {
-    clearBoard();
+    clearBoard(boardCont);
     for (let i = 0; i < 10; i++) {
       for (let j = 0; j < 10; j++) {
         let tile = document.createElement("div");
@@ -36,18 +36,17 @@ const DOMHandler = (() => {
         boardCont.appendChild(tile);
       }
     }
-
-    function clearBoard() {
-      boardCont.querySelectorAll(".tile").forEach((item) => {
-        item.remove();
-      });
-    }
+  }
+  function clearBoard(boardCont) {
+    boardCont.querySelectorAll(".tile").forEach((item) => {
+      item.remove();
+    });
   }
   function getCoordinates(tile) {
     console.log([tile.dataset.x, tile.dataset.y]);
     return [tile.dataset.x, tile.dataset.y];
   }
-  return { renderBoard, getCoordinates };
+  return { renderBoard, getCoordinates, clearBoard };
 })();
 
 export { DOMHandler };

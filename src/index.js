@@ -11,3 +11,9 @@ p1Cont.addEventListener("click", (e) => {
 p2Cont.addEventListener("click", (e) => {
   gameMaster.properPlayerTurn(e.target, gameMaster.player2);
 });
+
+const reset = document.querySelector(".reset-but");
+console.log(reset);
+reset.addEventListener("click", () => {
+  gameMaster.init(true);
+});
