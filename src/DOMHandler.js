@@ -46,7 +46,7 @@ const DOMHandler = (() => {
     console.log([tile.dataset.x, tile.dataset.y]);
     return [tile.dataset.x, tile.dataset.y];
   }
-  function displayGameOver(name, winningSide, losingSide) {
+  function displayGameOver(win, winningSide, losingSide) {
     const bgDiv = document.createElement("div");
     const msgDiv = document.createElement("div");
     msgDiv.className = "game-over";
