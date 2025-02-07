@@ -46,14 +46,18 @@ const DOMHandler = (() => {
     console.log([tile.dataset.x, tile.dataset.y]);
     return [tile.dataset.x, tile.dataset.y];
   }
-  function displayGameOver(name, winningSide, losingSide) {
+  function displayGameOver(win, winningSide, losingSide) {
     const bgDiv = document.createElement("div");
     const msgDiv = document.createElement("div");
     msgDiv.className = "game-over";
     bgDiv.className = "game-over";
 
-    msgDiv.textContent = `${name} won the game!`;
-    bgDiv.textContent = `you suck!`;
+    msgDiv.textContent = `WON!`;
+    bgDiv.textContent = `LOST!`;
+    if (!win) {
+      msgDiv.textContent = `LOST!`;
+      bgDiv.textContent = `WON!`;
+    }
 
     winningSide.appendChild(msgDiv);
     losingSide.appendChild(bgDiv);
