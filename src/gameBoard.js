@@ -7,7 +7,7 @@ const gameBoard = (gridSize = 10) => {
   //a propertly to hold the ship
   let tileSet = [];
   let shipList = [];
-  (function createTileSet(gridSize) {
+  function createTileSet(gridSize) {
     for (let i = 0; i < gridSize; i++) {
       tileSet.push([]);
       for (let j = 0; j < gridSize; j++) {
@@ -15,7 +15,13 @@ const gameBoard = (gridSize = 10) => {
         tileSet[i].push({ isHit: null, shipContained: null });
       }
     }
-  })(gridSize);
+  }
+  createTileSet(gridSize);
+
+  function cleanTileSet() {
+    tileSet = [];
+    createTileSet(gridSize);
+  }
 
   function AreAllShipsSunk() {
     let shipsNotSunk = [];
@@ -129,6 +135,7 @@ const gameBoard = (gridSize = 10) => {
       return tileSet;
     },
     AreAllShipsSunk,
+    cleanTileSet,
   };
 };
 export { gameBoard };

@@ -62,12 +62,24 @@ const DOMHandler = (() => {
     cont1.lastChild.remove();
     cont2.lastChild.remove();
   }
+  function removePlaceRand(place, rand) {
+    place.classList.toggle("display-place");
+    rand.classList.toggle("display-random");
+  }
+  function addPlaceRand(place, rand) {
+    if (!place.classList.contains("display-place")) {
+      place.classList.toggle("display-place");
+      rand.classList.toggle("display-random");
+    }
+  }
   return {
     renderBoard,
     getCoordinates,
     clearBoard,
     displayGameOver,
     removeGameOver,
+    removePlaceRand,
+    addPlaceRand,
   };
 })();
 

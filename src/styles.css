@@ -60,6 +60,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 10px;
 }
 
 .human-board,
@@ -103,4 +104,46 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.human-board-header,
+.computer-board-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  gap: 10px;
+}
+
+.human-random,
+.computer-random {
+  display: none;
+  grid-column-start: 4;
+  border: none;
+  border-radius: 10px;
+  background-color: black;
+  color: white;
+  padding: 5px 20px;
+  height: min-content;
+  align-self: center;
+}
+.human-board-header > h2,
+.computer-board-header > h2 {
+  grid-column-start: 3;
+}
+
+.human-place,
+.computer-place {
+  display: none;
+  grid-column-start: 2;
+  border: none;
+  border-radius: 10px;
+  background-color: black;
+  color: white;
+  padding: 5px 20px;
+  height: min-content;
+  height: min-content;
+  align-self: center;
+}
+.display-place,
+.display-random {
+  display: block;
 }
