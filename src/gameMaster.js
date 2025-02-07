@@ -93,7 +93,7 @@ let gameMaster = (() => {
             playComp; //for the computer to play again if it hits its own square
           }
           DOMHandler.renderBoard(player1.board.tileSet, p1Cont, true);
-          DOMHandler.renderBoard(player2.board.tileSet, p2Cont, true);
+          DOMHandler.renderBoard(player2.board.tileSet, p2Cont, false);
         } else {
           throw new Error(`not ${player.name}\'s turn`);
         }

@@ -51,7 +51,6 @@ const DOMHandler = (() => {
     const msgDiv = document.createElement("div");
     msgDiv.className = "game-over";
     bgDiv.className = "game-over";
-
     msgDiv.textContent = `WON!`;
     bgDiv.textContent = `LOST!`;
     if (!win) {
