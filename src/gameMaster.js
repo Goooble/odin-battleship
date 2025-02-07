@@ -38,7 +38,7 @@ let gameMaster = (() => {
     turn = player2.name; //dont be confused, turn is WHO is getting hit
     placement();
     DOMHandler.renderBoard(player1.board.tileSet, p1Cont, true);
-    DOMHandler.renderBoard(player2.board.tileSet, p2Cont, false);
+    DOMHandler.renderBoard(player2.board.tileSet, p2Cont, true);
     DOMHandler.addPlaceRand(humanPlace, humanRand);
     // DOMHandler.addPlaceRand(computerPlace, computerRand);
     // gameOverScreen(player2);
@@ -52,22 +52,33 @@ let gameMaster = (() => {
     player.board.cleanTileSet();
     player.placeShipsRandomly(ship);
     DOMHandler.renderBoard(player1.board.tileSet, p1Cont, true);
-    DOMHandler.renderBoard(player2.board.tileSet, p2Cont, false);
+    DOMHandler.renderBoard(player2.board.tileSet, p2Cont, true);
   }
 
   function placement() {
-    player1.placeShipsRandomly(ship);
+    player1.placeShipsOnBoard(
+      ship,
+      [
+        [0, 0],
+        [5, 6],
+      ],
+      ["ver", "hor"],
+    );
     player2.placeShipsRandomly(ship);
   }
 
   function gameOverScreen(lost) {
-    let ifWin = false;
+    let winningSide = computerSide;
+    let losingSide = humanSide;
+    let name = player2.name;
     if (lost === player2) {
-      ifWin = true;
+      winningSide = humanSide;
+      losingSide = computerSide;
+      name = player1.name;
     }
     DOMHandler.renderBoard(player1.board.tileSet, p1Cont, true);
     DOMHandler.renderBoard(player2.board.tileSet, p2Cont, true);
-    DOMHandler.displayGameOver(ifWin, humanSide, computerSide);
+    DOMHandler.displayGameOver(name, winningSide, losingSide);
   }
 
   function properPlayerTurn(tile, player) {
