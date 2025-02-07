@@ -51,9 +51,12 @@ const DOMHandler = (() => {
     const msgDiv = document.createElement("div");
     msgDiv.className = "game-over";
     bgDiv.className = "game-over";
-
-    msgDiv.textContent = `${name} won the game!`;
-    bgDiv.textContent = `you suck!`;
+    msgDiv.textContent = `WON!`;
+    bgDiv.textContent = `LOST!`;
+    if (!win) {
+      msgDiv.textContent = `LOST!`;
+      bgDiv.textContent = `WON!`;
+    }
 
     winningSide.appendChild(msgDiv);
     losingSide.appendChild(bgDiv);
